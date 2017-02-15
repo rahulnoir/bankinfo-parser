@@ -2,6 +2,7 @@
 
 import sys
 import requests
+import re
 
 DEBUG = 1
 
@@ -29,7 +30,10 @@ def scrape_url (url):
     if get_data.status_code == 200:
         if DEBUG == 1:
             print ("DEBUG_MSG: Success! Status returned = " + str(get_data.status_code))
-        print (get_data.content)
+        xls_urls = re.findall(b"(https?:\/\/(.+?)\.xls)", get_data.content)
+        for xls in xls_urls:
+            print (xls[0])
+## TODO: check if string, element greater than 1 to check if there is data in the list/array
     else:
         print("\nDEBUG_MSG: Invalid response received or link unreachable.\nDEBUG_MSG: Status returned: " + str(get_data.status_code))
 
