@@ -33,7 +33,7 @@ def scrape_url (url):
         xls_urls = re.findall(b"(https?:\/\/(.+?)\.xls)", get_data.content)
         for xls in xls_urls:
             print (xls[0])
-## TODO: check if string, element greater than 1 to check if there is data in the list/array
+## TODO: check if string, element greater than 1 to check if there is data in the list/array; then convert http to https
     else:
         print("\nDEBUG_MSG: Invalid response received or link unreachable.\nDEBUG_MSG: Status returned: " + str(get_data.status_code))
 
