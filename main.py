@@ -17,12 +17,16 @@ src_url = "https://www.rbi.org.in/Scripts/bs_viewcontent.aspx?Id=2009"
 
 # Function takes RBI's URL as input and scraps all the xls links on the page
 def scrape_url (url):
-    
+    main_xls_urls = []
     if DEBUG == 1:
         print ("DEBUG_MSG: Inside scrape_url() function.\nDEBUG_MSG: url = " + url)
     
     # Scraping the xls links from the `url` variable
     get_data = requests.get(url)
+    if get_data is None:
+        print ("No data was received, or unable to scrape the page.")
+        if DEBUG == 1:
+            print ("check 'requests' section under scrape_url()")
 
     if DEBUG == 1:
         print ("DEBUG_MSG: " + str(get_data.status_code))
@@ -30,10 +34,15 @@ def scrape_url (url):
     if get_data.status_code == 200:
         if DEBUG == 1:
             print ("DEBUG_MSG: Success! Status returned = " + str(get_data.status_code))
-        xls_urls = re.findall(b"(https?:\/\/(.+?)\.xls)", get_data.content)
+        xls_urls = re.findall(r'(https?:\/\/(.+?)\.xls)', get_data.text)
+        if len(xls_urls) == 0:
+           print ("Empty list/No XLS file URLs")
+           if DEBUG == 1:
+               print ("Function name = scrape_url(), under sorting regex")
         for xls in xls_urls:
-            print (xls[0])
-## TODO: check if string, element greater than 1 to check if there is data in the list/array; then convert http to https
+            main_xls_urls.append(xls[0])
+        print (main_xls_urls)
+
     else:
         print("\nDEBUG_MSG: Invalid response received or link unreachable.\nDEBUG_MSG: Status returned: " + str(get_data.status_code))
 
