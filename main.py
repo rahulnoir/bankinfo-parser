@@ -32,18 +32,28 @@ def scrape_url (url):
         print ("DEBUG_MSG: " + str(get_data.status_code))
 
     if get_data.status_code == 200:
-        if DEBUG == 1:
-            print ("DEBUG_MSG: Success! Status returned = " + str(get_data.status_code))
-        xls_urls = re.findall(r'(https?:\/\/(.+?)\.xls)', get_data.text)
-        if len(xls_urls) == 0:
-           print ("Empty list/No XLS file URLs")
-           if DEBUG == 1:
-               print ("Function name = scrape_url(), under sorting regex")
-        for xls in xls_urls:
-            main_xls_urls.append(xls[0])
-        print (main_xls_urls)
-
+        main_xls_urls = get_xls_links(get_data)
+        for link in main_xls_urls:
+            if DEBUG == 1:
+                print (link)
+            link = link.replace("http", "https")
+            if DEBUG == 1:
+                print (link)
+##TODO: mkdir dir; then download xls to dir; create chksum of file for comparison later
     else:
         print("\nDEBUG_MSG: Invalid response received or link unreachable.\nDEBUG_MSG: Status returned: " + str(get_data.status_code))
+
+def get_xls_links (scraped_data):
+    xls_links = []
+    if DEBUG == 1:
+        print ("DEBUG_MSG: Success! Status returned = " + str(scraped_data.status_code))
+    xls_urls = re.findall(r'(https?:\/\/(.+?)\.xls)', scraped_data.text)
+    if len(xls_urls) == 0:
+       print ("Empty list/No XLS file URLs")
+       if DEBUG == 1:
+           print ("Function name = scrape_url(), under sorting regex")
+    for xls in xls_urls:
+        xls_links.append(xls[0])
+    return (xls_links)
 
 scrape_url(src_url)
