@@ -39,7 +39,7 @@ def scrape_url (url):
             link = link.replace("http", "https")
             if DEBUG == 1:
                 print (link)
-##TODO: mkdir dir; then download xls to dir; create chksum of file for comparison later
+    download_xls(main_xls_urls)
     else:
         print("\nDEBUG_MSG: Invalid response received or link unreachable.\nDEBUG_MSG: Status returned: " + str(get_data.status_code))
 
@@ -55,5 +55,9 @@ def get_xls_links (scraped_data):
     for xls in xls_urls:
         xls_links.append(xls[0])
     return (xls_links)
+
+def download_xls(main_urls):
+##TODO: mkdir dir; then download xls to dir; create chksum of file for comparison later
+    
 
 scrape_url(src_url)
