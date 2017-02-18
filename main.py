@@ -28,7 +28,7 @@ def scrape_url (url):
     if get_data is None:
         print ("No data was received, or unable to scrape the page.")
         if DEBUG == 1:
-            print ("check 'requests' section under scrape_url()")
+            print ("\nDEBUG_MSG: check 'requests' section under scrape_url()")
 
     if DEBUG == 1:
         print ("DEBUG_MSG: " + str(get_data.status_code))
@@ -36,6 +36,7 @@ def scrape_url (url):
     if get_data.status_code == 200:
         main_xls_urls = get_xls_links(get_data)
         main_xls_urls = [url.replace("http:", "https:") for url in main_xls_urls]
+        create_xlsdir()
         download_xls(main_xls_urls)
     else:
         print("\nDEBUG_MSG: Invalid response received or link unreachable.\nDEBUG_MSG: Status returned: " + str(get_data.status_code))
@@ -48,22 +49,27 @@ def get_xls_links (scraped_data):
     if len(xls_urls) == 0:
        print ("Empty list/No XLS file URLs")
        if DEBUG == 1:
-           print ("Function name = scrape_url(), under sorting regex")
+           print ("\nDEBUG_MSG: Function name = scrape_url(), under sorting regex")
     for xls in xls_urls:
         xls_links.append(xls[0])
     return (xls_links)
 
-def download_xls(main_urls):
+def create_xlsdir():
 #TODO: mkdir dir; then download xls to dir; create chksum of file for comparison later
-    if DEBUG == 1:
-        print (main_urls)
-    path = "xls/"
-    if not os.path.isdir(path):
-        print ("DIR doesn't exist.")
-        os.makedirs(path, exist_ok=True)
+    xls_filepath = "xls/"
+    if not os.path.isdir(xls_filepath):
+        if DEBUG == 1:
+            print ("\nDEBUG_MSG: DIR 'xls/' doesn't exist.")
+        os.makedirs(xls_filepath, exist_ok=True)
     else:
-        print ("DIR exists.")
-        print ("Deleting DIR.")
-        shutil.rmtree(path, ignore_errors=True)
+        if DEBUG == 1:
+            print ("\nDEBUG_MSG: DIR 'xls/' exists.")
+            print ("\nDEBUG_MSG: Deleting 'xls/' DIR.")
+        shutil.rmtree(xls_filepath, ignore_errors=True)
+        os.makedirs(xls_filepath, exist_ok=True)
+
+def download_xls(xls_urls):
+    
+
 
 scrape_url(src_url)
