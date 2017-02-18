@@ -3,6 +3,8 @@
 import sys
 import requests
 import re
+import os
+import shutil
 
 DEBUG = 1
 
@@ -33,13 +35,8 @@ def scrape_url (url):
 
     if get_data.status_code == 200:
         main_xls_urls = get_xls_links(get_data)
-        for link in main_xls_urls:
-            if DEBUG == 1:
-                print (link)
-            link = link.replace("http", "https")
-            if DEBUG == 1:
-                print (link)
-    download_xls(main_xls_urls)
+        main_xls_urls = [url.replace("http:", "https:") for url in main_xls_urls]
+        download_xls(main_xls_urls)
     else:
         print("\nDEBUG_MSG: Invalid response received or link unreachable.\nDEBUG_MSG: Status returned: " + str(get_data.status_code))
 
@@ -57,7 +54,16 @@ def get_xls_links (scraped_data):
     return (xls_links)
 
 def download_xls(main_urls):
-##TODO: mkdir dir; then download xls to dir; create chksum of file for comparison later
-    
+#TODO: mkdir dir; then download xls to dir; create chksum of file for comparison later
+    if DEBUG == 1:
+        print (main_urls)
+    path = "xls/"
+    if not os.path.isdir(path):
+        print ("DIR doesn't exist.")
+        os.makedirs(path, exist_ok=True)
+    else:
+        print ("DIR exists.")
+        print ("Deleting DIR.")
+        shutil.rmtree(path, ignore_errors=True)
 
 scrape_url(src_url)
