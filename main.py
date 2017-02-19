@@ -55,7 +55,6 @@ def get_xls_links (scraped_data):
     return (xls_links)
 
 def create_xlsdir():
-#TODO: mkdir dir; then download xls to dir; create chksum of file for comparison later
     xls_filepath = "xls/"
     if not os.path.isdir(xls_filepath):
         if DEBUG == 1:
@@ -69,7 +68,13 @@ def create_xlsdir():
         os.makedirs(xls_filepath, exist_ok=True)
 
 def download_xls(xls_urls):
-    
-
+    for xls_url in xls_urls:
+        path = 'xls' + '/' + xls_url.split("/")[-1]
+        req_url = requests.get(xls_url, stream=True)
+        if req_url.status_code == 200:
+            with open(path, 'wb') as f:
+                for chunk in req_url.iter_content(1024):
+                    f.write(chunk)
+## TODO: Add try/except to raise Exception; then add section to keep track of new XLS changes
 
 scrape_url(src_url)
