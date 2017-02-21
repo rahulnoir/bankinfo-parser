@@ -70,11 +70,14 @@ def create_xlsdir():
 def download_xls(xls_urls):
     for xls_url in xls_urls:
         path = 'xls' + '/' + xls_url.split("/")[-1]
-        req_url = requests.get(xls_url, stream=True)
-        if req_url.status_code == 200:
-            with open(path, 'wb') as f:
-                for chunk in req_url.iter_content(1024):
-                    f.write(chunk)
+        try:
+            req_url = requests.get(xls_url, stream=True)
+            if req_url.status_code == 200:
+                with open(path, 'wb') as f:
+                    for chunk in req_url.iter_content(1024):
+                        f.write(chunk)
+        except Exception as excp:
+            raise Exception("Cannot download the XLS link:\n", req_url, "\n", str(excp))
 ## TODO: Add try/except to raise Exception; then add section to keep track of new XLS changes
 
 scrape_url(src_url)
