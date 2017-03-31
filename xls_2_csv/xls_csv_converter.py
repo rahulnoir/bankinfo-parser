@@ -6,7 +6,7 @@ import os
 csv_filepath = "csv/"
 xls_filepath = "xls/"
 
-DEBUG = 1
+DEBUG = 0
 
 def create_csvdir():
     if not os.path.isdir(csv_filepath):

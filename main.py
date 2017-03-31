@@ -7,7 +7,7 @@ import os
 import shutil
 from xls_2_csv.xls_csv_converter import *
 
-DEBUG = 1
+DEBUG = 0
 
 # Gets the current Python version
 if DEBUG == 1:
