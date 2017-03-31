@@ -5,6 +5,7 @@ import requests
 import re
 import os
 import shutil
+from xls_2_csv.xls_csv_converter import *
 
 DEBUG = 1
 
@@ -36,7 +37,8 @@ def scrape_url (url):
     if get_data.status_code == 200:
         main_xls_urls = get_xls_links(get_data)
         main_xls_urls = [url.replace("http:", "https:") for url in main_xls_urls]
-        create_xlsdir()
+        make_xls_dir()
+        make_csv_dir()
         download_xls(main_xls_urls)
     else:
         print("\nDEBUG_MSG: Invalid response received or link unreachable.\nDEBUG_MSG: Status returned: " + str(get_data.status_code))
@@ -54,7 +56,7 @@ def get_xls_links (scraped_data):
         xls_links.append(xls[0])
     return (xls_links)
 
-def create_xlsdir():
+def make_xls_dir():
     xls_filepath = "xls/"
     if not os.path.isdir(xls_filepath):
         if DEBUG == 1:
@@ -80,7 +82,12 @@ def download_xls(xls_urls):
             raise Exception("Cannot download the XLS link:\n", req_url, "\n", str(excp))
 ## TODO: Add section to keep track of new XLS changes
 ## TODO: Convert xls to csv
+def make_csv_dir():
+    create_csvdir()
 
+def convert_to_csv():
+   xls_to_csv() 
 ## TODO: Section to check Install all dependencies
 
 scrape_url(src_url)
+convert_to_csv()
