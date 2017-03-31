@@ -25,7 +25,8 @@ def xls_to_csv():
         if os.path.isfile(os.path.join(xls_filepath, xls)):
             xlsfile = xlrd.open_workbook(os.path.join(xls_filepath, xls))
             xlssheet = xlsfile.sheet_by_index(0)
-            csvfile = open(os.path.join(csv_filepath, (xls + '.csv')), 'w', encoding='utf8')
+            xlsname = xls.split('.')[0]
+            csvfile = open(os.path.join(csv_filepath, (xlsname + '.csv')), 'w', encoding='utf8')
             csvwrite = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
             for rownum in range(xlssheet.nrows):
                 csvwrite.writerow(xlssheet.row_values(rownum))
