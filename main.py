@@ -86,8 +86,5 @@ def make_csv_dir():
 def convert_to_csv():
    xls_to_csv()
 
-## TODO: Section to check Install all dependencies
-## TODO: Add section to keep track of new XLS changes
-
 scrape_url(src_url)
 convert_to_csv()
