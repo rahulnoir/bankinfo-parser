@@ -80,14 +80,14 @@ def download_xls(xls_urls):
                         f.write(chunk)
         except Exception as excp:
             raise Exception("Cannot download the XLS link:\n", req_url, "\n", str(excp))
-## TODO: Add section to keep track of new XLS changes
-## TODO: Convert xls to csv
 def make_csv_dir():
     create_csvdir()
 
 def convert_to_csv():
-   xls_to_csv() 
+   xls_to_csv()
+
 ## TODO: Section to check Install all dependencies
+## TODO: Add section to keep track of new XLS changes
 
 scrape_url(src_url)
 convert_to_csv()
