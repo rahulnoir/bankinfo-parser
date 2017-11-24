@@ -1,8 +1,9 @@
-### RBI IFSC code scraper  
+#### RBI IFSC code scraper (*discontinued...*)  
   
 ![Build-State](https://travis-ci.org/rn4ir/bankinfo-parser.svg?branch=master)  
   
 A simple scraper made to download relevant branch-related information for various banks in India.  
+  
 *Notes:*
 - The scraper downloads the data from the Reserve Bank of India's website.
 - [The URL that is scraped.](https://www.rbi.org.in/Scripts/bs_viewcontent.aspx?Id=2009)
