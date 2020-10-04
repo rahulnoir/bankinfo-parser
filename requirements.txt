@@ -1,2 +1,7 @@
-requests==2.13.0
-xlrd==1.0.0
+certifi==2020.6.20
+chardet==3.0.4
+idna==2.10
+pkg-resources==0.0.0
+requests==2.24.0
+urllib3==1.25.10
+xlrd==1.2.0
